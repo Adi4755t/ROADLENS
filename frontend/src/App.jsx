@@ -29,7 +29,7 @@ import { PlotChart } from './components/charts/Plot'
 
 const API =
   import.meta.env.VITE_API_URL ||
-  'http://localhost:5000/api'
+  'https://roadlens-1.onrender.com/api'
 
 const INITIAL_FILTERS = {
   state: 'all',
