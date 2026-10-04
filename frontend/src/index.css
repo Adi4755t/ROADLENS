@@ -1,0 +1,421 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #050606;
+  --foreground: #f3f4ee;
+
+  --road-bg: #050606;
+  --road-surface: #0a0d0b;
+  --road-panel: #0f1310;
+  --road-panel-2: #121712;
+
+  --road-border: rgba(255, 255, 255, 0.07);
+  --road-border-strong: rgba(255, 255, 255, 0.11);
+
+  --traffic-green: #7cff6b;
+  --traffic-green-soft: rgba(124, 255, 107, 0.12);
+
+  --traffic-amber: #ffc857;
+  --traffic-amber-soft: rgba(255, 200, 87, 0.12);
+
+  --traffic-red: #ff4d4d;
+  --traffic-red-soft: rgba(255, 77, 77, 0.12);
+
+  --road-white: #f3f4ee;
+  --road-muted: #929a91;
+  --road-dim: #5e665f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--road-bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+
+  font-family: 'Manrope', sans-serif;
+
+  color: var(--road-white);
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(124, 255, 107, 0.035),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(255, 200, 87, 0.025),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255, 77, 77, 0.025),
+      transparent 32%
+    ),
+    #050606;
+
+  min-height: 100vh;
+}
+
+/* ------------------------------------------------ */
+/* GLOBAL ROAD GRID */
+/* ------------------------------------------------ */
+
+body::before {
+  content: '';
+
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      rgba(0, 0, 0, 0.7) 50%,
+      transparent 100%
+    );
+}
+
+/* ------------------------------------------------ */
+/* SUBTLE ROAD LANE */
+/* ------------------------------------------------ */
+
+body::after {
+  content: '';
+
+  position: fixed;
+
+  width: 1px;
+  height: 100vh;
+
+  left: 50%;
+  top: 0;
+
+  pointer-events: none;
+
+  opacity: 0.08;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 18px,
+      rgba(255, 255, 255, 0.22) 18px,
+      rgba(255, 255, 255, 0.22) 44px
+    );
+
+  z-index: 0;
+}
+
+/* ------------------------------------------------ */
+/* TYPOGRAPHY */
+/* ------------------------------------------------ */
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(124, 255, 107, 0.2);
+  color: #ffffff;
+}
+
+/* ------------------------------------------------ */
+/* SCROLLBAR */
+/* ------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050606;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252b26;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #353e36;
+}
+
+/* ------------------------------------------------ */
+/* TRAFFIC CONTROL SURFACE */
+/* ------------------------------------------------ */
+
+.traffic-surface {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  border: 1px solid var(--road-border);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+/* ------------------------------------------------ */
+/* TRAFFIC SIGNAL */
+/* ------------------------------------------------ */
+
+.traffic-signal {
+  width: 32px;
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #191d1a,
+      #090b0a
+    );
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.traffic-light {
+  width: 8px;
+  height: 8px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  opacity: 0.18;
+
+  transition:
+    opacity 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.traffic-light.red {
+  background: #ff4d4d;
+}
+
+.traffic-light.amber {
+  background: #ffc857;
+}
+
+.traffic-light.green {
+  background: #7cff6b;
+}
+
+.traffic-light.active {
+  opacity: 1;
+}
+
+.traffic-light.red.active {
+  box-shadow:
+    0 0 8px #ff4d4d,
+    0 0 18px rgba(255, 77, 77, 0.65);
+}
+
+.traffic-light.amber.active {
+  box-shadow:
+    0 0 8px #ffc857,
+    0 0 18px rgba(255, 200, 87, 0.65);
+}
+
+.traffic-light.green.active {
+  box-shadow:
+    0 0 8px #7cff6b,
+    0 0 18px rgba(124, 255, 107, 0.65);
+}
+
+/* ------------------------------------------------ */
+/* LIVE STATUS */
+/* ------------------------------------------------ */
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #7cff6b;
+
+  box-shadow:
+    0 0 7px #7cff6b,
+    0 0 14px rgba(124, 255, 107, 0.5);
+
+  animation:
+    livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ------------------------------------------------ */
+/* STATUS COLORS */
+/* ------------------------------------------------ */
+
+.status-safe {
+  color: var(--traffic-green);
+}
+
+.status-warning {
+  color: var(--traffic-amber);
+}
+
+.status-danger {
+  color: var(--traffic-red);
+}
+
+/* ------------------------------------------------ */
+/* PANEL GLOW */
+/* ------------------------------------------------ */
+
+.panel-green {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 0 35px rgba(124, 255, 107, 0.025);
+}
+
+.panel-amber {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 0 35px rgba(255, 200, 87, 0.025);
+}
+
+.panel-red {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 0 35px rgba(255, 77, 77, 0.025);
+}
+
+/* ------------------------------------------------ */
+/* CHART CONTAINER */
+/* ------------------------------------------------ */
+
+.chart-shell {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chart-shell::after {
+  content: '';
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    );
+
+  pointer-events: none;
+}
+
+/* ------------------------------------------------ */
+/* FILTER SELECT */
+/* ------------------------------------------------ */
+
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background: #0d110e;
+  color: #f3f4ee;
+}
+
+/* ------------------------------------------------ */
+/* ANIMATIONS */
+/* ------------------------------------------------ */
+
+.fade-in {
+  animation: fadeIn 0.45s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------ */
+/* RESPONSIVE */
+/* ------------------------------------------------ */
+
+@media (max-width: 768px) {
+  body::before {
+    background-size: 32px 32px;
+  }
+
+  body::after {
+    display: none;
+  }
+}
